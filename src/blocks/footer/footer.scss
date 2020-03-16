@@ -1,3 +1,20 @@
 .footer__text {
   color: blueviolet;
 }
+
+button {
+  cursor: pointer;
+
+  & svg {
+    fill: transparent;
+    stroke: red;
+    transition: stroke 0.3s;
+    color: red;
+  }
+
+  &:hover {
+    & svg {
+      stroke: blueviolet;
+    }
+  }
+}

@@ -449,3 +449,19 @@ a {
 .footer__text {
   color: blueviolet;
 }
+
+button {
+  cursor: pointer;
+}
+
+button svg {
+  fill: transparent;
+  stroke: red;
+  -webkit-transition: stroke 0.3s;
+  transition: stroke 0.3s;
+  color: red;
+}
+
+button:hover svg {
+  stroke: blueviolet;
+}

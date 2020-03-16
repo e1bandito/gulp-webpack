@@ -1,24 +1,24 @@
 'use strict';
 
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var plumber = require('gulp-plumber');
-var postcss = require('gulp-postcss');
-var autoprefixer = require('autoprefixer');
-var csso = require('gulp-csso');
-var rename = require('gulp-rename');
-var sassGlob = require('gulp-sass-glob');
-var sourcemaps = require('gulp-sourcemaps');
-var server = require('browser-sync').create();
-var imagemin = require('gulp-imagemin');
-var webp = require('gulp-webp');
-var svgstore = require("gulp-svgstore");
-var del = require('del');
-var gcmq = require('gulp-group-css-media-queries');
-var webpack = require('webpack-stream');
-var pug = require('gulp-pug');
-var prettify = require('gulp-jsbeautifier');
+const gulp = require('gulp');
+const sass = require('gulp-sass');
+const plumber = require('gulp-plumber');
+const postcss = require('gulp-postcss');
+const autoprefixer = require('autoprefixer');
+const csso = require('gulp-csso');
+const rename = require('gulp-rename');
+const sassGlob = require('gulp-sass-glob');
+const sourcemaps = require('gulp-sourcemaps');
+const server = require('browser-sync').create();
+const imagemin = require('gulp-imagemin');
+const webp = require('gulp-webp');
+const del = require('del');
+const gcmq = require('gulp-group-css-media-queries');
+const webpack = require('webpack-stream');
+const pug = require('gulp-pug');
+const prettify = require('gulp-jsbeautifier');
 const getData = require('jade-get-data')('src/data');
+const svgSymbols = require('gulp-svg-symbols');
 
 let webpackConf = {
   output: {
@@ -99,7 +99,7 @@ gulp.task('images', () => {
   .pipe(imagemin([
     imagemin.optipng({optimizationLevel: 3}),
     imagemin.jpegtran({progressive: true}),
-    imagemin.svgo()
+    // imagemin.svgo()
   ]))
   .pipe(gulp.dest('src/img'));
 });
@@ -114,11 +114,30 @@ gulp.task('webp', () => {
 
 // svg-sprite
 gulp.task("sprite", () => {
-  return gulp.src("src/img/sprite-*.svg")
-  .pipe(svgstore({
-    inlineSvg: true
+  return gulp.src("src/img/svg-sprite/*.svg")
+  .pipe(svgSymbols({
+    title: false,
+    id: 'icon_%f',
+    class: '%f',
+    templates: ['default-svg'],
   }))
-  .pipe(rename("sprite.svg"))
+  .pipe(imagemin([
+    imagemin.svgo({
+      plugins: [
+        { optimizationLevel: 3 },
+        { progessive: true },
+        { interlaced: true },
+        { removeViewBox: false },
+        { removeUselessStrokeAndFill: true },
+        { cleanupIDs: false },
+        { cleanupAttrs: true },
+        { removeMetadata: true },
+        { removeTitle: true },
+        { removeAttrs: { attrs: '(fill|stroke|data-name)' } },
+      ],
+    }),
+  ]))
+  .pipe(rename('sprite.svg'))
   .pipe(gulp.dest("src/img"));
 });
 
@@ -132,7 +151,6 @@ gulp.task('copy', () => {
   return gulp.src([
     'src/fonts/**/*.{eot,svg,ttf,woff,woff2}',
     'src/img/**',
-    // 'src/pages/*.html',
   ], {
     base: 'src/'
   })

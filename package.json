@@ -46,7 +46,7 @@
     "gulp-sass": "^4.0.2",
     "gulp-sass-glob": "^1.1.0",
     "gulp-sourcemaps": "^2.6.5",
-    "gulp-svgstore": "^7.0.1",
+    "gulp-svg-symbols": "^3.2.3",
     "gulp-webp": "^4.0.1",
     "jade-get-data": "^1.0.1",
     "normalize.css": "^8.0.1",
