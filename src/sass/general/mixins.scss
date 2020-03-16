@@ -23,7 +23,7 @@
     font-weight: $weight;
     font-display: swap;
     src: url("../fonts/" +$file+ ".woff2") format("woff2"),
-  url("../fonts/" +$file+ ".woff") format("woff");
+        url("../fonts/" +$file+ ".woff") format("woff");
   }
 }
 
@@ -34,10 +34,10 @@
     font-weight: $weight;
     src: url("../fonts/" +$file+ ".eot");
     src: url("../fonts/" +$file+ ".eot?#iefix") format("embedded-opentype"),
-  url("../fonts/" +$file+ ".woff2") format("woff2"),
-  url("../fonts/" +$file+ ".woff") format("woff"),
-  url("../fonts/" +$file+ ".otf")  format("opentype"),
-  url("../fonts/" +$file+ ".ttf")  format("truetype"),
-  url("../fonts/" +$file+ ".svg#" +$name) format("svg");
+        url("../fonts/" +$file+ ".woff2") format("woff2"),
+        url("../fonts/" +$file+ ".woff") format("woff"),
+        url("../fonts/" +$file+ ".otf")  format("opentype"),
+        url("../fonts/" +$file+ ".ttf")  format("truetype"),
+        url("../fonts/" +$file+ ".svg#" +$name) format("svg");
   }
 }
