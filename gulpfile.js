@@ -19,6 +19,13 @@ const pug = require('gulp-pug');
 const prettify = require('gulp-jsbeautifier');
 const getData = require('jade-get-data')('src/data');
 const svgSymbols = require('gulp-svg-symbols');
+const gulpIf = require('gulp-if');
+const argv = require('yargs').argv;
+
+
+const isDev = true;
+const isProd = !isDev;
+
 
 let webpackConf = {
   output: {
@@ -32,24 +39,24 @@ let webpackConf = {
         exclude: '/node_modules/'
       }
     ]
-  }
+  },
+  mode: argv.dev ? 'development' : 'production',
+  devtool: argv.dev ? 'eval-source-map' : 'none'
 };
 
 // Автопрефиксы и минификация стилей
 gulp.task('style', (done) => {
   gulp.src('src/sass/style.scss')
     .pipe(plumber())
-    .pipe(sourcemaps.init())
+    .pipe(gulpIf(argv.dev, sourcemaps.init()))
     .pipe(sassGlob())
     .pipe(sass())
     .pipe(postcss([
       autoprefixer()
     ]))
-    .pipe(gcmq())
-    .pipe(gulp.dest('build/css'))
-    .pipe(csso())
-    .pipe(rename('style.min.css'))
-    .pipe(sourcemaps.write('./'))
+    .pipe(gulpIf(argv.prod, gcmq()))
+    .pipe(gulpIf(argv.prod, csso()))
+    .pipe(gulpIf(argv.dev, sourcemaps.write()))
     .pipe(gulp.dest('build/css'))
     .pipe(server.stream());
     done()
@@ -166,8 +173,8 @@ gulp.task('serve',() => {
   gulp.watch('src/blocks/**/*.js', gulp.series('js'));
   gulp.watch('src/pug/**/*.pug', gulp.series('pug'));
   gulp.watch('src/blocks/**/*.pug', gulp.series('pug'));
-  gulp.watch('src/fonts/**', gulp.series('copy'));
-  gulp.watch('src/img/**', gulp.series('copy'));
+  gulp.watch('src/fonts/*', gulp.series('copy'));
+  gulp.watch('src/img/*', gulp.series('copy'));
 });
 
 // Сборка в build
