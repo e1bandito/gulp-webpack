@@ -1,0 +1,4 @@
+mixin checkbox(id)
+  +b.checkbox
+    +e.INPUT.field.visually-hidden(type="checkbox", id= id, name="agree", checked, required)
+    +e.LABEL.label(for= id)  Нажимая на кнопку, вы даете <a href="#" class="checkbox__link">согласие на обработку персональных данных</a>

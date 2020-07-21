@@ -1,5 +1,14 @@
 [
-  { "path": "#", "title": "Page #1" },
-  { "path": "#", "title": "Page #2" },
-  { "path": "#", "title": "Page #3" }
+  {
+    "path": "index.html",
+    "title": "main"
+  },
+  {
+    "path": "page2.html",
+    "title": "page2"
+  },
+  {
+    "path": "page3.html",
+    "title": "page3"
+  }
 ]

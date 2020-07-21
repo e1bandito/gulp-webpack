@@ -1,4 +1,3 @@
-//- include ../../../node_modules/bemto.pug/bemto
 include ../mixins/mixins
 include externalIncludes
 
@@ -6,11 +5,12 @@ block variables
   - var pageTitle = 'main'
 
 doctype html
-include ./head
+html(lang="ru")
+  include ./head
 
-body
-  block content
+  body
+    block content
 
 
-  block scripts
-    include ./scripts
+    block scripts
+      include ./scripts

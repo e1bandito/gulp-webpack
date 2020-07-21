@@ -59,7 +59,7 @@ gulp.task('style', (done) => {
     .pipe(gulpIf(argv.dev, sourcemaps.write()))
     .pipe(gulp.dest('build/css'))
     .pipe(server.stream());
-    done()
+  done()
 });
 
 
@@ -79,7 +79,7 @@ gulp.task('pug', () => {
   return gulp.src('src/pug/pages/*.pug')
     .pipe(plumber())
     .pipe(pug({ data: { getData } }))
-    .pipe(pug())
+    .pipe(pug({ pretty: true }))
     .pipe(prettify({
       braceStyle: 'expand',
       indent_size: 2,
@@ -98,48 +98,48 @@ gulp.task('pug', () => {
 // Оптимизация изображений
 gulp.task('images', () => {
   return gulp.src('src/img/**/*.{png,jpg,svg}')
-  .pipe(imagemin([
-    imagemin.optipng({optimizationLevel: 3}),
-    imagemin.jpegtran({progressive: true}),
-  ]))
-  .pipe(gulp.dest('src/img'));
+    .pipe(imagemin([
+      imagemin.optipng({ optimizationLevel: 3 }),
+      imagemin.jpegtran({ progressive: true }),
+    ]))
+    .pipe(gulp.dest('src/img'));
 });
 
 
 // Конвертация в webp
 gulp.task('webp', () => {
   return gulp.src('src/img/**/*.{png,jpg}')
-  .pipe(webp({quality: 90}))
-  .pipe(gulp.dest('src/img'));
+    .pipe(webp({ quality: 90 }))
+    .pipe(gulp.dest('src/img'));
 });
 
 // svg-sprite
 gulp.task("sprite", () => {
   return gulp.src("src/img/svg-sprite/*.svg")
-  .pipe(svgSymbols({
-    title: false,
-    id: 'icon_%f',
-    class: '%f',
-    templates: ['default-svg'],
-  }))
-  .pipe(imagemin([
-    imagemin.svgo({
-      plugins: [
-        { optimizationLevel: 3 },
-        { progessive: true },
-        { interlaced: true },
-        { removeViewBox: false },
-        { removeUselessStrokeAndFill: true },
-        { cleanupIDs: false },
-        { cleanupAttrs: true },
-        { removeMetadata: true },
-        { removeTitle: true },
-        { removeAttrs: { attrs: '(fill|stroke|data-name)' } },
-      ],
-    }),
-  ]))
-  .pipe(rename('sprite.svg'))
-  .pipe(gulp.dest("src/img"));
+    .pipe(svgSymbols({
+      title: false,
+      id: 'icon_%f',
+      class: '%f',
+      templates: ['default-svg'],
+    }))
+    .pipe(imagemin([
+      imagemin.svgo({
+        plugins: [
+          { optimizationLevel: 3 },
+          { progessive: true },
+          { interlaced: true },
+          { removeViewBox: false },
+          { removeUselessStrokeAndFill: true },
+          { cleanupIDs: false },
+          { cleanupAttrs: true },
+          { removeMetadata: true },
+          { removeTitle: true },
+          { removeAttrs: { attrs: '(fill|stroke|data-name)' } },
+        ],
+      }),
+    ]))
+    .pipe(rename('sprite.svg'))
+    .pipe(gulp.dest("src/img"));
 });
 
 // Очиска build
@@ -155,23 +155,27 @@ gulp.task('copy', () => {
   ], {
     base: 'src/'
   })
-  .pipe(gulp.dest('build'));
+    .pipe(gulp.dest('build'));
 });
 
 // Watcher
-gulp.task('serve',() => {
+gulp.task('serve', () => {
   server.init({
     server: 'build/',
-    notify: true,
+    notify: false,
     open: true,
     cors: true,
     ui: false
   });
+  gulp.watch('src/components/**/*.scss', gulp.series('style'));
   gulp.watch('src/blocks/**/*.scss', gulp.series('style'));
   gulp.watch('src/sass/**/*.scss', gulp.series('style'));
   gulp.watch('src/js/**', gulp.series('js'));
+  gulp.watch('src/components/**/*.js', gulp.series('js'));
   gulp.watch('src/blocks/**/*.js', gulp.series('js'));
   gulp.watch('src/pug/**/*.pug', gulp.series('pug'));
+  gulp.watch('src/data/**/*.json', gulp.series('pug'));
+  gulp.watch('src/components/**/*.pug', gulp.series('pug'));
   gulp.watch('src/blocks/**/*.pug', gulp.series('pug'));
   gulp.watch('src/fonts/*', gulp.series('copy'));
   gulp.watch('src/img/*', gulp.series('copy'));

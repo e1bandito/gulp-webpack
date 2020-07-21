@@ -1,3 +1,1 @@
-import {footer} from './import/main';
-
-console.log(footer);
+import { components } from '../components/components';

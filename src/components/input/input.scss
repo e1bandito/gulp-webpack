@@ -1,0 +1,25 @@
+.input {
+  height: 60px;
+  width: 100%;
+  margin-bottom: 17px;
+}
+
+.input__field {
+  width: 100%;
+
+  font-size: 16px;
+  line-height: 60px;
+  padding: 0 30px;
+  background-color: #f9f6ef;
+  font-family: "Roboto", "Arial", sans-serif;
+  border: 1px solid transparent;
+
+  &:focus {
+    outline: none;
+    border-color: #003355;
+  }
+
+  &:hover {
+    border-color: #003355;
+  }
+}

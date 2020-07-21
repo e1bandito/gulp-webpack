@@ -1,0 +1,21 @@
+.nav__list {
+  @include lsr;
+  display: flex;
+}
+
+.nav__item {
+  margin: 10px;
+  color: black;
+
+  &--active {
+    color: tomato;
+  }
+}
+
+.nav__link {
+  color: currentColor;
+
+  &:hover {
+    color: tomato;
+  }
+}

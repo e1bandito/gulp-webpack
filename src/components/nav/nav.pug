@@ -1,0 +1,8 @@
+- const data = getData('nav')
+
++b.nav
+  +e.list
+    //- include ../../components/burger/burger
+    each item in data
+      +e.item(class= (item.title === pageTitle) ? "--active" : "")
+        +e.link(href= item.path) #{item.title}
