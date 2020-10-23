@@ -1,0 +1,25 @@
+.timer {
+  width: 320px;
+  padding: 10px;
+  margin: 0 auto;
+}
+
+.timer__list {
+  @include lsr;
+  display: flex;
+  justify-content: space-between;
+}
+
+.timer__item {
+  text-align: center;
+}
+
+.timer__num {
+  margin: 0;
+  font-size: 40px;
+}
+
+.timer__text {
+  margin: 0;
+  font-size: 18px;
+}
