@@ -1,28 +1,27 @@
 function Timer(selector, obj) {
-
   let that = this;
   let timer;
   let start = false;
   let timerContainer = document.querySelector(selector);
 
   if (obj.days < 0 || obj.days === 0) {
-    obj.days = '0';
+    obj.days = "0";
   }
 
   if (obj.hours < 0 || obj.hours > 24) {
-    obj.hours = '24';
+    obj.hours = "24";
   }
 
   if (obj.hours === 0) {
-    obj.hours = '00';
+    obj.hours = "00";
   }
 
   if (obj.minutes < 0 || obj.minutes > 60 || obj.minutes === 0) {
-    obj.minutes = '00';
+    obj.minutes = "00";
   }
 
   if (obj.seconds < 0 || obj.seconds > 60 || obj.seconds === 0) {
-    obj.seconds = '00';
+    obj.seconds = "00";
   }
 
   const timerHtml = `
@@ -43,7 +42,7 @@ function Timer(selector, obj) {
         <p class="timer__num timer__num--seconds">${obj.seconds}</p>
         <p class="timer__text">секунды</p>
       </li>
-    </ul>`
+    </ul>`;
 
   timerContainer.innerHTML = timerHtml;
 
@@ -64,13 +63,13 @@ function Timer(selector, obj) {
     if (hours > 24) {
       hours = 24;
     }
-    if (hours === '00') {
+    if (hours === "00") {
       hours = 24;
       getDays();
     }
     hours--;
     if (hours < 10) {
-      hours = '0' + hours;
+      hours = "0" + hours;
     }
     timerHours.innerHTML = hours;
     obj.hours = hours;
@@ -78,13 +77,13 @@ function Timer(selector, obj) {
 
   function getMin() {
     let min = obj.minutes;
-    if (min === '00') {
+    if (min === "00") {
       min = 60;
       getHours();
     }
     min--;
     if (min < 10) {
-      min = '0' + min;
+      min = "0" + min;
     }
     timerMinutes.innerHTML = min;
     obj.minutes = min;
@@ -92,17 +91,22 @@ function Timer(selector, obj) {
 
   function getSec() {
     let sec = obj.seconds;
-    if (obj.days === '0' && obj.hours === '00' && obj.minutes === '00' && obj.seconds === '00') {
+    if (
+      obj.days === "0" &&
+      obj.hours === "00" &&
+      obj.minutes === "00" &&
+      obj.seconds === "00"
+    ) {
       that.stop();
       return;
     }
-    if (sec === '00') {
+    if (sec === "00") {
       sec = 60;
       getMin();
     }
     sec--;
     if (sec < 10) {
-      sec = '0' + sec;
+      sec = "0" + sec;
     }
     timerSeconds.innerHTML = sec;
     obj.seconds = sec;
@@ -111,9 +115,7 @@ function Timer(selector, obj) {
   that.stop = function () {
     clearInterval(timer);
     start = false;
-  }
-
-
+  };
 
   that.start = function () {
     if (!start) {
@@ -122,7 +124,7 @@ function Timer(selector, obj) {
         start = true;
       }, 1000);
     }
-  }
+  };
 
   that.start();
 }
