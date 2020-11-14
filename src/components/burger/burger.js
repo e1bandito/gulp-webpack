@@ -1,15 +1,20 @@
-import $ from "jquery";
+let burger = function (button, nav) {
+  let burgerBtn = document.querySelector(button);
+  let navigation = document.querySelector(nav);
+  let body = document.querySelector("body");
 
-$('.burger').on('click', function () {
-  $(this).toggleClass('burger--open');
-  $('.nav').toggleClass('nav--open');
-  $('body').toggleClass('body-lock');
-});
+  if (burgerBtn) {
+    burgerBtn.addEventListener("click", function () {
+      body.classList.toggle("body-lock");
+      burgerBtn.classList.add("burger__anim");
+      burgerBtn.classList.toggle("burger__anim--open");
 
-$('.nav__link').on('click', function () {
-  if ('nav--open') {
-    $('.nav').removeClass('nav--open');
-    $('.burger').removeClass('burger--open');
-    $('body').removeClass('body-lock');
+      if (!navigation.classList.contains("nav--anim")) {
+        navigation.classList.add("nav--anim");
+      }
+      navigation.classList.toggle("nav--open");
+    });
   }
-});
+};
+
+export default burger;

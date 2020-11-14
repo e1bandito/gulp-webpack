@@ -1,1 +1,3 @@
-import { components } from '../components/components';
+import burger from "../components/burger/burger";
+
+burger(".burger", ".nav");
