@@ -20,7 +20,7 @@ const prettify = require("gulp-jsbeautifier");
 const getData = require("jade-get-data")("src/data");
 const svgSymbols = require("gulp-svg-symbols");
 const gulpIf = require("gulp-if");
-const ghPages = require('gulp-gh-pages');
+const ghPages = require("gulp-gh-pages");
 const argv = require("yargs").argv;
 
 const isDev = true;
@@ -102,7 +102,7 @@ gulp.task("images", () => {
     .pipe(
       imagemin([
         imagemin.optipng({ optimizationLevel: 3 }),
-        imagemin.jpegtran({ progressive: true }),
+        imagemin.mozjpeg({ progressive: true }),
       ])
     )
     .pipe(gulp.dest("src/img"));
@@ -165,9 +165,8 @@ gulp.task("copy", () => {
 });
 
 // gh-pages
-gulp.task('gh-pages', function() {
-  return gulp.src('build/**/*')
-    .pipe(ghPages());
+gulp.task("gh-pages", function () {
+  return gulp.src("build/**/*").pipe(ghPages());
 });
 
 // Watcher
